@@ -1,0 +1,23 @@
+// Type 15d to type 15a
+K<t>:=FunctionField(Rationals()); 
+R<x0,x1,y0,y1,z0,z1,L0,L2,L3,L4,A1> := PolynomialRing(K,[1,1,1,1,1,1,1,1,1,1,2]);
+
+F1 := L4*x1*y0 - A1*y1;
+F2 := L2*L0*y0 - L3*L0*y1;
+G1 := L0*x0 - x1^2;
+G2 := L3*L0*L4*x0 - L2*A1*x1;
+H := L3*L0*L4*x1 - A1*L2*L0;
+
+Q1 := x0*y0 - t*L3*x1;
+Q2 := x0*y1 - t*L2*x1;
+Q3 := x1*y0 - t*L3*L0;
+Q4 := x1*y1 - t*L2*L0;
+
+// Type 15d
+I1 := Ideal([F1,F2,G1,G2,H,x0*y0,x0*y1,x1*y0,x1*y1]);
+// Type 15a
+I2 := Ideal([F1,F2,G1,G2,H,Q1,Q2,Q3,Q4]);
+
+// Check correct Betti tables
+FreeResolution(GradedModule(I1));
+FreeResolution(GradedModule(I2));
