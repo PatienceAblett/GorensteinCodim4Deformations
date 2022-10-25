@@ -1,1 +1,14 @@
-Hi
+//Type 16b to type 16a
+
+K<t> := FunctionField(Rationals());
+R<x0,x1,x2,x3,x4,x5,q1,q2,q3,Q> := PolynomialRing(K,[1,1,1,1,1,1,2,2,2,2]);
+
+
+Mat1 := -AntisymmetricMatrix(R,[x0,x1,q1,x2,q2,q3,0,x3,x4,x5]);
+I1 := Ideal(Pfaffians(Mat1,4))+Ideal([Q]);
+
+Mat2 := -AntisymmetricMatrix(R,[x0,x1,q1,x2,q2,q3,t,x3,x4,x5]);
+I2 := Ideal(Pfaffians(Mat2,4))+Ideal([Q]);
+
+FreeResolution(GradedModule(I1));
+FreeResolution(GradedModule(I2));
