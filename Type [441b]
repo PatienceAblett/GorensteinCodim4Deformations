@@ -1,0 +1,45 @@
+// Type [441b]
+
+// Begin with [441b] to [400]
+
+K<t> := FunctionField(Rationals());
+R<x0,x1,y0,y1,z0,z1,A,B,C,D,c,b,a,d> := PolynomialRing(K,[1,1,1,1,1,1,2,2,2,2,1,1,1,1]);
+P := Proj(R);
+
+// Setting up type [441b]I
+Mat1 := Matrix(3,[0,x0,x1,y0,D,C,y1,B,A]);
+I1 := Ideal(Minors(Mat1,2));
+FreeResolution(GradedModule(I1));
+
+// Type [400]
+Mat2 := Matrix(3,[-t,x0,x1,y0,D,C,y1,B,A]);
+I2 := Ideal(Minors(Mat2,2));
+FreeResolution(GradedModule(I2));
+
+// Now Type [441b]II
+Mat3 := Matrix(3,[0,x0,x1,y0,D,x0*c+y1*b,y1,B,x0*a+y0*d]);
+I3 := Ideal(Minors(Mat3,2));
+FreeResolution(GradedModule(I3));
+
+// Type [430]
+M := Matrix(4,[1/t*D,-1/t*B,a,c,-t*b,x0,0,0,x0,-t*d,0,0]);
+v := Matrix(1,[y1,y0,D,-B]);
+
+I4 := Ideal([Minors(M,3)[1]+x1*v[1,1],Minors(M,3)[2]-x1*v[2,1],Minors(M,3)[3]+x1*v[3,1],
+Minors(M,3)[4]-x1*v[4,1],(M*v)[1,1],(M*v)[2,1],(M*v)[3,1]]);
+
+F4 := y0^2*d - y1^2*b;
+H := D*(x0*a + y0*d) - B*(x0*c + y1*b);
+F4 in I4;
+H in I4;
+
+FreeResolution(GradedModule(I4));
+
+X1 := Scheme(P,MinimalBasis(I1));
+X2 := Scheme(P,MinimalBasis(I2));
+X3 := Scheme(P,MinimalBasis(I3));
+X4 := Scheme(P,MinimalBasis(I4));
+Dimension(X1);
+Dimension(X2);
+Dimension(X3);
+Dimension(X4);
