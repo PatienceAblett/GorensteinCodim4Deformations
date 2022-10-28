@@ -1,10 +1,11 @@
-// Magma code for Type 15c
+// Magma code for Type [562]a
 
-//15c to 15a
+//[562]a to [550]
 
 K<t> := FunctionField(Rationals());
 R<x1,x2,x3,x4,y1,y2,a13,a23,b13,b23,a14,a24,b14,b24,H12,H34> := PolynomialRing(
 K,[1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3]);
+P := Proj(R);
 
 F1 := a13*x1*x3+a23*x2*x3+a14*x1*x4+a24*x2*x4;
 F2 := b13*x1*x3+b23*x2*x3+b14*x1*x4+b24*x2*x4;
@@ -19,32 +20,50 @@ F22 := b23*x3+b24*x4;
 F23 := b13*x1+b23*x2;
 F24 := b14*x1+b24*x2;
 
-// The two matrices defining C
-Mat1 := -AntisymmetricMatrix(R,[y2,t,0,F21,F11,x2,F22,F12,-x1,H12]);
-I1 := Ideal(Pfaffians(Mat1,4));
+// Type [562]aI
+Mat01 := -AntisymmetricMatrix(R,[y2,0,0,F21,F11,x2,F22,F12,-x1,H34]);
+I01 := Ideal(Pfaffians(Mat01,4));
 
-Mat2 := -AntisymmetricMatrix(R,[y1,t,0,F23,F13,x4,F24,F14,-x3,H12]);
-I2 := Ideal(Pfaffians(Mat2,4));
+Mat02 := -AntisymmetricMatrix(R,[y1,0,0,F23,F13,x4,F24,F14,-x3,H12]);
+I02 := Ideal(Pfaffians(Mat02,4));
+
+J0 := I01 + I02 + Ideal([y1*y2]);
+FreeResolution(GradedModule(J0));
+
+// Now the two matrices defining Ct
+
+Mat11 := -AntisymmetricMatrix(R,[y2,t,0,F21,F11,x2,F22,F12,-x1,H12]);
+I11 := Ideal(Pfaffians(Mat11,4));
+
+Mat12 := -AntisymmetricMatrix(R,[y1,t,0,F23,F13,x4,F24,F14,-x3,H12]);
+I12 := Ideal(Pfaffians(Mat12,4));
 
 // The matrix defining the del Pezzo surface
 Mat3 := -AntisymmetricMatrix(R,[y1,x2,-x1,t*a14,t*a24,-x3,t*a13,t*a23,x4,y2]);
 K := Pfaffians(Mat3,4);
 
-J := I1 + I2 + Ideal([y1*y2-t^2*(a14*a23-a13*a24)]);
-MinimalBasis(J);
-// Note that J = K + general cubic
+J1 := I11 + I12 + Ideal([y1*y2-t^2*(a14*a23-a13*a24)]);
+MinimalBasis(J1);
+// Note that J1 = K + general cubic
 
 // J has 6 x 10 resolution as expected
-FreeResolution(GradedModule(J));
+FreeResolution(GradedModule(J1));
 
-// Now consider 15c to 15b
+// Now consider [562]aII to [551]
 
-Mat1_new := -AntisymmetricMatrix(R,[y2,0,0,F21,F11,x2,F22,F12,-x1,H12]);
-I1_new := Ideal(Pfaffians(Mat1_new,4));
+Mat21 := -AntisymmetricMatrix(R,[y2,0,0,F21,F11,x2,F22,F12,-x1,H12]);
+I21 := Ideal(Pfaffians(Mat21,4));
 
-Mat2_new := -AntisymmetricMatrix(R,[y1,t,0,F23,F13,x4,F24,F14,-x3,0]);
-I2_new := Ideal(Pfaffians(Mat2_new,4));
+Mat22 := -AntisymmetricMatrix(R,[y1,t,0,F23,F13,x4,F24,F14,-x3,0]);
+I22 := Ideal(Pfaffians(Mat22,4));
 
-J_new := I1_new + I2_new + Ideal([y1*y2]);
-MinimalBasis(J_new);
-FreeResolution(GradedModule(J_new));
+J2 := I21 + I22 + Ideal([y1*y2]);
+
+FreeResolution(GradedModule(J2));
+
+X0 := Scheme(P,MinimalBasis(J0));
+X1 := Scheme(P,MinimalBasis(J1));
+X2 := Scheme(P,MinimalBasis(J2));
+Dimension(X0);
+Dimension(X1);
+Dimension(X2);
