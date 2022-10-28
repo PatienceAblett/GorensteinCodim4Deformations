@@ -1,4 +1,4 @@
-// Type 15b
+// Type [551]
 K<t>:=FunctionField(Rationals()); 
 R<x0,x1,x2,x3,x4,y,a0,a1,a2,b0,b1,b2,c0,c1,c2,F2> := PolynomialRing(K,
 [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,3]);
@@ -14,7 +14,7 @@ M1[2]-y*v1[2,1],M1[3]+y*v1[3,1],M1[4]-y*v1[4,1]]);
 
 FreeResolution(GradedModule(I1));
 
-// Deformation to 15a
+// Deformation to [550]
 
 Mat2 := Matrix(4,[0,a0,a1,a2,0,b0,b1,b2,t,c0,c1,c2]);
 
