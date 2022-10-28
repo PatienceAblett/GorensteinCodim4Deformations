@@ -1,20 +1,21 @@
-// Type 16c to 16b and 16a
+// Type [430] to [420] and [400]
 
 K<s1> := FunctionField(Rationals());
 K<s2> := FunctionField(K);
 
 R<x0,x1,x2,y1,y2,z,Q,P,A,C,B,D> := PolynomialRing(K,[1,1,1,1,1,1,2,2,1,1,2,2]);
+PP := Proj(R);
 
 // Rank N=0
 
 M := Matrix(4,[Q,P,A,C,-x0,x1,0,0,x1,-x2,0,0]);
 v := Matrix(1,[y2,y1,D,-B]);
 
-I := Ideal([Minors(M,3)[1]+z*v[1,1],Minors(M,3)[2]-z*v[2,1],Minors(M,3)[3]+z*v[3,1],
+I1 := Ideal([Minors(M,3)[1]+z*v[1,1],Minors(M,3)[2]-z*v[2,1],Minors(M,3)[3]+z*v[3,1],
 Minors(M,3)[4]-z*v[4,1],(M*v)[1,1],(M*v)[2,1],(M*v)[3,1]]);
 
-MinimalBasis(I);
-FreeResolution(GradedModule(I));
+MinimalBasis(I1);
+FreeResolution(GradedModule(I1));
 
 // Rank N=1
 
@@ -33,3 +34,10 @@ Minors(M3,3)[4]-z*v[4,1],(M3*v)[1,1],(M3*v)[2,1],(M3*v)[3,1]]);
 
 MinimalBasis(I3);
 FreeResolution(GradedModule(I3));
+
+X1 := Scheme(PP,MinimalBasis(I1));
+X2 := Scheme(PP,MinimalBasis(I2));
+X3 := Scheme(PP,MinimalBasis(I3));
+Dimension(X1);
+Dimension(X2);
+Dimension(X3);
