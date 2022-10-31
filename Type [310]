@@ -1,0 +1,50 @@
+\\ Type 310
+
+K<t> := FunctionField(Rationals());
+R<x0,x1,x2,x3,x4,x5,x6,x7,y,a0,a1,b0,b1,c0,c1,d0,d1,E,L> := PolynomialRing(K,
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1]);
+P := Proj(R);
+
+A := a0*x0+a1*x1;
+B := b0*x0+b1*x1;
+C := c0*x0+c1*x1;
+D := d0*x0+d1*x1;
+
+\\ Start by defining 310
+
+Mat1 := -AntisymmetricMatrix(R,[A,B,x2,C,x3,x5,D,x4,x6,x7]);
+I := Ideal(Pfaffians(Mat1,4));
+Q := x4*x5 - x3*x6 + x2*x7;
+J := Ideal([x0,x1,Q]);
+K := ColonIdeal(I,J);
+MinimalBasis(I);
+
+F := MinimalBasis(K+J)[4] + y*E;
+Q2 := Q + y*L;
+
+I1 := (K + Ideal([y])) meet Ideal([x0,x1,F,Q2]);
+FreeResolution(GradedModule(I1));
+
+Pf5 := MinimalBasis(I)[5];
+
+\\ Define 310
+
+M := Matrix(4,[x1,a0,-b0,c0,x0,-a1,b1,-c1,t*L,x4,-x6,x7]);
+v := Matrix(1,[y*1/t,x5,x3,x2]);
+S := D + t*E;
+
+I2 := Ideal([Minors(M,3)[1]+S*v[1,1],Minors(M,3)[2]-S*v[2,1],Minors(M,3)[3]+S*v[3,1],
+Minors(M,3)[4]-S*v[4,1],(M*v)[1,1],(M*v)[2,1],(M*v)[3,1]]);
+
+\\ Check Pf5 is redundant
+
+Pf5 in I2;
+FreeResolution(GradedModule(I2));
+
+\\ Dimension is preserved
+
+X1 := Scheme(P,MinimalBasis(I1));
+X2 := Scheme(P,MinimalBasis(I2));
+Dimension(X1);
+Dimension(X2);
+
