@@ -1,0 +1,57 @@
+// Type [331]
+
+K<t> := FunctionField(Rationals());
+R<x0,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,y,a0,b1> := PolynomialRing(K,
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0]);
+P := Proj(R);
+
+// [331] to [300a]
+
+Mat1 := -AntisymmetricMatrix(R,[x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,a0*x0,b1*x1,0,0,0,0,0,0,x0,x1,x2]);
+I := Ideal(Pfaffians(Mat1,6));
+J := Ideal([x0,x1,x2]);
+K := ColonIdeal(I,J);
+
+Pf1234 := x3*x8 - x4*x7 + x5*x6;
+Pf1235 := x3*x11 - x4*x10 + x5*x9;
+Pf1236 := b1*x1*x4 - a0*x0*x5;
+
+// Defining [331] and [300a], checking Betti tables
+
+I1 := Ideal([x0*y,x1*y,x2*y])+K;
+I2 := Ideal([x0*y+t*Pf1234,x1*y+t*Pf1235,x2*y-t*Pf1236]) + K;
+
+FreeResolution(GradedModule(I1));
+FreeResolution(GradedModule(I2));
+
+// Checking dimension
+
+X1 := Scheme(P,MinimalBasis(I1));
+X2 := Scheme(P,MinimalBasis(I2));
+Dimension(X1);
+Dimension(X2);
+
+// [331] to [310]
+
+// Defining [331]ii
+
+Mat2 := -AntisymmetricMatrix(R,[x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,a0*x0,b1*x1,0,0,0,0,0,0,0,x1,x2]);
+
+Pf2345 := x5*x12 - x7*x11 + x8*x10;
+
+Inew := Ideal(Pfaffians(Mat2,6));
+K2 := ColonIdeal(Inew,J);
+
+// Checking Betti tables
+
+I3 := K2 + Ideal([x0*y,x1*y,x2*y]);
+I4 := K2 + Ideal([x0*y+t*Pf1234,x1*y,x2*y]);
+FreeResolution(GradedModule(I3));
+FreeResolution(GradedModule(I4));
+
+// Checking dimension
+
+X3 := Scheme(P,MinimalBasis(I3));
+X4 := Scheme(P,MinimalBasis(I4));
+Dimension(X3);
+Dimension(X4);
